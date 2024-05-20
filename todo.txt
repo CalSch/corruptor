@@ -1,4 +1,5 @@
 (A) Write to the same file as you read from
+(A) Fix the thing where some bytes are lost
 (B) Dynamic buffer size
 (B) Add demo to readme
 (B) Fractional mutate chance
