@@ -68,13 +68,13 @@ int main(int argc, char **argv) {
 	}
 
 	char* outfilename = malloc(strlen(filename)+4);
-	strcpy(outfilename,filename);
-	strcat(outfilename,"_out");
+	strcpy(outfilename,"out/");
+	strcat(outfilename,filename);
 
+	printf("Opening infile ('%s')\n",filename);
 	FILE *infile = fopen(filename,"rb");
-	printf("Opened infile\n");
+	printf("Opening outfile ('%s')\n",outfilename);
 	FILE *outfile = fopen(outfilename,"wb");
-	printf("Opened outfile\n");
 
 	// for (int i=10;i--;) {
 	while (readBuffer(infile)) {
