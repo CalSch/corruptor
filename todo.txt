@@ -2,4 +2,6 @@
 (A) Fix the thing where some bytes are lost
 (B) Dynamic buffer size
 (B) Add demo to readme
-(B) Fractional mutate chance
+(B) Mutations per chunk option
+(B) Mutation type option (flip bit, set bit to 0/1, set byte, maybe a custom program?)
+(C) Fractional mutate chance
