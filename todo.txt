@@ -1,7 +1,8 @@
 (A) Write to the same file as you read from
 (A) Fix the thing where some bytes are lost
+(A) Use a better system for CLI args (maybe use <argp.h>)
 (B) Dynamic buffer size
 (B) Add demo to readme
 (B) Mutations per chunk option
 (B) Mutation type option (flip bit, set bit to 0/1, set byte, maybe a custom program?)
-(C) Fractional mutate chance
+(C) Floating point mutate chance
