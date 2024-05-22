@@ -5,4 +5,5 @@
 (B) Add demo to readme
 (B) Mutations per chunk option
 (B) Mutation type option (flip bit, set bit to 0/1, set byte, maybe a custom program?)
+(B) Add debug log levels (or just a debug mode)
 (C) Floating point mutate chance
