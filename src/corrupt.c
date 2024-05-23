@@ -3,8 +3,9 @@
 #include <string.h>
 #include <math.h>
 #include <time.h>
+#include <stdbool.h>
 
-#define BUFFER_SIZE 64
+#define BUFFER_SIZE 8
 
 unsigned char buffer[BUFFER_SIZE];
 
@@ -13,22 +14,25 @@ int totalChunks = 0;
 int mutations = 0;
 int mutationChance = 100;
 
+bool debug = true;
+
 int readBuffer(FILE* ptr) {
 	size_t objs = fread(buffer,sizeof(buffer[0]),BUFFER_SIZE,ptr);
-	// printf("Read %ld objs\n",objs);
+	if (debug)
+		printf("Read %ld objs\n",objs);
 	totalChunks++;
 	currentPosition += objs;
-	return objs == BUFFER_SIZE;
+	return objs;
 }
 
-void writeBuffer(FILE* ptr) {
-	fwrite(buffer,sizeof(buffer[0]),BUFFER_SIZE,ptr);
+void writeBuffer(FILE* ptr, int bytes) {
+	fwrite(buffer,sizeof(buffer[0]),bytes,ptr);
 }
 
-void mutateBuffer() {
+void mutateBuffer(int maxByte) {
 	if (rand() % mutationChance != 0)
 		return;
-	int byte = rand() % BUFFER_SIZE;
+	int byte = rand() % maxByte;
 	int bit = rand() % 8;
 	int flipNum = 1 << bit;
 	printf("[0x%08x] ",currentPosition);
@@ -76,11 +80,16 @@ int main(int argc, char **argv) {
 	printf("Opening outfile ('%s')\n",outfilename);
 	FILE *outfile = fopen(outfilename,"wb");
 
+	bool running = true;
 	// for (int i=10;i--;) {
-	while (readBuffer(infile)) {
-		// printBuffer();
-		mutateBuffer();
-		writeBuffer(outfile);
+	while (running) {
+		int objs = readBuffer(infile);
+		printBuffer();
+		mutateBuffer(objs);
+		writeBuffer(outfile,objs);
+		if (objs != BUFFER_SIZE) {
+			running = false;
+		}
 	}
 
 	printf("Closing infile\n");
